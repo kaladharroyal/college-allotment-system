@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Classroom & Exam Allotment</title>
+    <!-- Use a modern, friendly font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General body and typography styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 2rem 1rem;
+            color: #1f2937;
+        }
+        
+        /* Container for the dashboard content */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin: auto;
+        }
+
+        /* General heading styles */
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Header with logout button */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Table styles */
+        .table-container {
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .data-table th {
+            font-weight: 600;
+            color: #374151;
+            background-color: #f3f4f6;
+            white-space: nowrap;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input, .form-group textarea {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Button styles */
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #3b82f6;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-size: 0.875rem;
+        }
+
+        .action-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* Badge for labs */
+        .badge.lab {
+            background-color: #e0f2fe;
+            color: #075985;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container for the entire dashboard -->
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Student Dashboard</h2>
+            <button id="logout-student-btn" class="action-btn">Logout</button>
+        </div>
+
+        <h3>Class Timetable</h3>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Period 1</th>
+                        <th>Period 2</th>
+                        <th>Period 3</th>
+                        <th>Period 4</th>
+                        <th>Period 5</th>
+                        <th>Period 6</th>
+                        <th>Period 7</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mon</td>
+                        <td>DS (L-3)</td>
+                        <td>DBMS (L-3)</td>
+                        <td>OS (L-3)</td>
+                        <td>CN (L-3)</td>
+                        <td colspan="2"><span class="badge lab">AI Lab (L-10)</span></td>
+                        <td>SE (L-3)</td>
+                    </tr>
+                    <tr>
+                        <td>Tue</td>
+                        <td>FLAT (L-3)</td>
+                        <td colspan="2"><span class="badge lab">DBMS Lab (L-10)</span></td>
+                        <td>DS (L-3)</td>
+                        <td>CN (L-3)</td>
+                        <td>SE (L-3)</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Exam Timetable & Allotment</h3>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Date</th>
+                        <th>Timeslot</th>
+                        <th>Room</th>
+                        <th>Seat No.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data Structures</td>
+                        <td>2025-09-01</td>
+                        <td>10:00 AM</td>
+                        <td>LLF-3</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>DBMS</td>
+                        <td>2025-09-03</td>
+                        <td>2:00 PM</td>
+                        <td>LLF-4</td>
+                        <td>22</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Apply for Leave</h3>
+        <form id="leave-form">
+            <div class="form-group">
+                <label for="leave-date">Leave Date</label>
+                <input type="date" id="leave-date" required>
+            </div>
+            <div class="form-group">
+                <label for="leave-reason">Reason</label>
+                <textarea id="leave-reason" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Submit Leave Request</button>
+        </form>
+    </div>
+
+    <script>
+        // Get the logout button element
+        const logoutBtn = document.getElementById('logout-student-btn');
+
+        // Add a click event listener to the logout button
+        logoutBtn.addEventListener('click', () => {
+            // Redirect the user back to the login page
+            window.location.href = 'index.html';
+        });
+
+        // Add event listener for leave form submission (for demo purposes)
+        const leaveForm = document.getElementById('leave-form');
+        leaveForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            console.log('Leave request submitted!');
+            alert('Your leave request has been sent to your class teacher.');
+        });
+    </script>
+</body>
+</html>

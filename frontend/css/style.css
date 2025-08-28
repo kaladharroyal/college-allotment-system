@@ -1,0 +1,817 @@
+/* Academic Management System - Complete CSS */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Variables - Light Theme */
+:root {
+    /* Core Academic Theme */
+    --background: 210 25% 98%;
+    --foreground: 215 25% 15%;
+
+    /* Card System */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    /* Primary Academic Blue */
+    --primary: 212 84% 42%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 212 84% 52%;
+
+    /* Secondary Professional */
+    --secondary: 210 20% 95%;
+    --secondary-foreground: 215 25% 15%;
+
+    /* Accent Academic Green */
+    --accent: 145 63% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Success & Status */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Muted & Subtle */
+    --muted: 210 20% 95%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Borders & Inputs */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 212 84% 42%;
+
+    /* Design System Enhancements */
+    --gradient-primary: linear-gradient(135deg, hsl(212 84% 42%), hsl(212 84% 52%));
+    --gradient-academic: linear-gradient(135deg, hsl(212 84% 42%), hsl(145 63% 45%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 25% 98%), hsl(210 20% 95%));
+    
+    --shadow-soft: 0 2px 8px -2px hsl(215 25% 15% / 0.1);
+    --shadow-medium: 0 8px 25px -5px hsl(215 25% 15% / 0.15);
+    --shadow-strong: 0 25px 50px -12px hsl(215 25% 15% / 0.25);
+    --shadow-academic: 0 10px 30px -10px hsl(212 84% 42% / 0.3);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
+}
+
+/* Dark Theme */
+.dark {
+    /* Dark Academic Theme */
+    --background: 222 47% 7%;
+    --foreground: 210 40% 98%;
+
+    /* Card System Dark */
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    /* Primary Academic Blue Dark */
+    --primary: 212 84% 62%;
+    --primary-foreground: 222 47% 7%;
+    --primary-glow: 212 84% 72%;
+
+    /* Secondary Dark */
+    --secondary: 222 47% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent Academic Green Dark */
+    --accent: 145 63% 55%;
+    --accent-foreground: 222 47% 7%;
+
+    /* Success & Status Dark */
+    --success: 142 76% 46%;
+    --success-foreground: 222 47% 7%;
+    
+    --warning: 38 92% 60%;
+    --warning-foreground: 222 47% 7%;
+
+    --destructive: 0 84% 70%;
+    --destructive-foreground: 222 47% 7%;
+
+    /* Muted & Subtle Dark */
+    --muted: 222 47% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    /* Borders & Inputs Dark */
+    --border: 222 47% 20%;
+    --input: 222 47% 20%;
+    --ring: 212 84% 62%;
+
+    /* Design System Dark Enhancements */
+    --gradient-primary: linear-gradient(135deg, hsl(212 84% 62%), hsl(212 84% 72%));
+    --gradient-academic: linear-gradient(135deg, hsl(212 84% 62%), hsl(145 63% 55%));
+    --gradient-subtle: linear-gradient(180deg, hsl(222 47% 7%), hsl(222 47% 11%));
+    
+    --shadow-soft: 0 2px 8px -2px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 8px 25px -5px hsl(0 0% 0% / 0.4);
+    --shadow-strong: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+    --shadow-academic: 0 10px 30px -10px hsl(212 84% 62% / 0.4);
+}
+
+/* Base Styles */
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    line-height: 1.5;
+    transition: var(--transition-smooth);
+}
+
+/* Layout Utilities */
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
+
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mr-2 { margin-right: 0.5rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.w-full { width: 100%; }
+.w-4 { width: 1rem; }
+.w-5 { width: 1.25rem; }
+.w-6 { width: 1.5rem; }
+.w-8 { width: 2rem; }
+.w-10 { width: 2.5rem; }
+.w-12 { width: 3rem; }
+.w-16 { width: 4rem; }
+.h-4 { height: 1rem; }
+.h-5 { height: 1.25rem; }
+.h-6 { height: 1.5rem; }
+.h-8 { height: 2rem; }
+.h-10 { height: 2.5rem; }
+.h-12 { height: 3rem; }
+.h-16 { height: 4rem; }
+
+.max-w-md { max-width: 28rem; }
+.max-w-7xl { max-width: 80rem; }
+
+/* Grid System */
+.grid {
+    display: grid;
+}
+
+.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Responsive Grid */
+@media (min-width: 768px) {
+    .md\\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg\\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .lg\\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .lg\\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* Academic Layout */
+.academic-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+    .academic-container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .academic-container {
+        padding: 0 2rem;
+    }
+}
+
+.academic-card {
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid hsl(var(--border) / 0.5);
+    transition: var(--transition-smooth);
+}
+
+.academic-card:hover {
+    box-shadow: var(--shadow-strong);
+}
+
+.academic-gradient-subtle {
+    background: var(--gradient-subtle);
+}
+
+/* Typography */
+.heading-xl {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.heading-lg {
+    font-size: 1.875rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.heading-md {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.text-foreground {
+    color: hsl(var(--foreground));
+}
+
+.text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+}
+
+.text-primary-foreground {
+    color: hsl(var(--primary-foreground));
+}
+
+.text-accent-foreground {
+    color: hsl(var(--accent-foreground));
+}
+
+.text-success-foreground {
+    color: hsl(var(--success-foreground));
+}
+
+.text-warning-foreground {
+    color: hsl(var(--warning-foreground));
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-base {
+    font-size: 1rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+/* Cards */
+.card-header {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.card-content {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: hsl(var(--card-foreground));
+    margin-bottom: 0.5rem;
+}
+
+.card-description {
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-academic {
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-academic);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-academic:hover {
+    box-shadow: var(--shadow-strong);
+    transform: scale(1.05);
+}
+
+.btn-secondary-academic {
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    border: 1px solid hsl(var(--border));
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-secondary-academic:hover {
+    background-color: hsl(var(--secondary) / 0.8);
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-accent {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-medium);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-accent:hover {
+    background-color: hsl(var(--accent) / 0.9);
+    box-shadow: var(--shadow-strong);
+}
+
+.btn-outline {
+    background: transparent;
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--border));
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+
+.btn-outline:hover {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+}
+
+/* Form Elements */
+.form-input-academic {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--input));
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    transition: var(--transition-smooth);
+}
+
+.form-input-academic::placeholder {
+    color: hsl(var(--muted-foreground));
+}
+
+.form-input-academic:focus {
+    outline: none;
+    ring: 2px solid hsl(var(--primary));
+    border-color: hsl(var(--primary));
+}
+
+.form-label-academic {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.5rem;
+}
+
+/* Tabs */
+.tabs-list {
+    background-color: hsl(var(--muted));
+    padding: 0.25rem;
+    border-radius: var(--radius);
+}
+
+.tab-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: calc(var(--radius) - 0.125rem);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    width: 100%;
+}
+
+.tab-trigger:hover {
+    color: hsl(var(--foreground));
+}
+
+.tab-trigger.active {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    box-shadow: var(--shadow-soft);
+}
+
+.tab-content {
+    margin-top: 1.5rem;
+}
+
+/* Status Badges */
+.status-floating {
+    background-color: hsl(var(--warning));
+    color: hsl(var(--warning-foreground));
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-static {
+    background-color: hsl(var(--success));
+    color: hsl(var(--success-foreground));
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-lab {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Badges */
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.bg-primary {
+    background-color: hsl(var(--primary));
+}
+
+.bg-primary\/10 {
+    background-color: hsl(var(--primary) / 0.1);
+}
+
+.text-primary {
+    color: hsl(var(--primary));
+}
+
+.bg-accent {
+    background-color: hsl(var(--accent));
+}
+
+.bg-muted\/30 {
+    background-color: hsl(var(--muted) / 0.3);
+}
+
+.bg-muted\/50 {
+    background-color: hsl(var(--muted) / 0.5);
+}
+
+/* Borders */
+.border-b {
+    border-bottom: 1px solid hsl(var(--border));
+}
+
+.border {
+    border: 1px solid hsl(var(--border));
+}
+
+.border-border {
+    border-color: hsl(var(--border));
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.rounded-lg {
+    border-radius: var(--radius);
+}
+
+.rounded-xl {
+    border-radius: calc(var(--radius) + 0.25rem);
+}
+
+/* Shadows */
+.shadow-soft {
+    box-shadow: var(--shadow-soft);
+}
+
+.shadow-medium {
+    box-shadow: var(--shadow-medium);
+}
+
+.shadow-strong {
+    box-shadow: var(--shadow-strong);
+}
+
+.shadow-academic {
+    box-shadow: var(--shadow-academic);
+}
+
+/* Animations */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-bounce-in {
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes bounceIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.9); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+/* Space Utilities */
+.space-y-2 > * + * {
+    margin-top: 0.5rem;
+}
+
+.space-y-4 > * + * {
+    margin-top: 1rem;
+}
+
+.space-y-6 > * + * {
+    margin-top: 1.5rem;
+}
+
+.space-y-8 > * + * {
+    margin-top: 2rem;
+}
+
+/* Display Utilities */
+.hidden {
+    display: none;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+/* Position Utilities */
+.fixed {
+    position: fixed;
+}
+
+.top-4 {
+    top: 1rem;
+}
+
+.right-4 {
+    right: 1rem;
+}
+
+.z-50 {
+    z-index: 50;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-medium);
+}
+
+.theme-toggle:hover {
+    box-shadow: var(--shadow-strong);
+    transform: scale(1.05);
+}
+
+.theme-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: hsl(var(--foreground));
+    transition: var(--transition-smooth);
+}
+
+.dark .sun-icon {
+    display: none;
+}
+
+.moon-icon {
+    display: none;
+}
+
+.dark .moon-icon {
+    display: block;
+}
+
+/* Toast Styles */
+.toast {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 1rem;
+    box-shadow: var(--shadow-strong);
+    margin-bottom: 0.5rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.toast.success {
+    border-left: 4px solid hsl(var(--success));
+}
+
+.toast.error {
+    border-left: 4px solid hsl(var(--destructive));
+}
+
+.toast-title {
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.25rem;
+}
+
+.toast-description {
+    color: hsl(var(--muted-foreground));
+    font-size: 0.875rem;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Page Content */
+.page-content {
+    display: none;
+}
+
+.page-content.active {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .academic-container {
+        padding: 0 1rem;
+    }
+    
+    .grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    .heading-xl {
+        font-size: 1.875rem;
+    }
+    
+    .theme-toggle {
+        width: 2rem;
+        height: 2rem;
+    }
+    
+    .theme-icon {
+        width: 1rem;
+        height: 1rem;
+    }
+}

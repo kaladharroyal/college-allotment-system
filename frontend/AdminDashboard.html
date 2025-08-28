@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Classroom & Exam Allotment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General body and typography styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 2rem 1rem;
+            color: #1f2937;
+        }
+        
+        /* Container for the dashboard content */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin: auto;
+        }
+
+        /* General heading styles */
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Header with logout button */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        /* Card grid for statistics */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #4b5563;
+        }
+
+        /* Table styles */
+        .table-container {
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .data-table th {
+            font-weight: 600;
+            color: #374151;
+            background-color: #f3f4f6;
+            white-space: nowrap;
+        }
+
+        /* Button styles */
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-size: 0.875rem;
+        }
+
+        .action-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* Badge for labels */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge.static { background-color: #d1fae5; color: #065f46; }
+        .badge.floating { background-color: #dbeafe; color: #1e40af; }
+        .badge.pending { background-color: #fef3c7; color: #92400e; }
+        .badge.approved { background-color: #d1fae5; color: #065f46; }
+        .badge.rejected { background-color: #fee2e2; color: #991b1b; }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container for the entire dashboard -->
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Admin Dashboard</h2>
+            <button id="logout-admin-btn" class="action-btn">Logout</button>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>Total Sections</h3>
+                <p>30</p>
+            </div>
+            <div class="card">
+                <h3>Total Faculty</h3>
+                <p>75</p>
+            </div>
+            <div class="card">
+                <h3>Total Rooms</h3>
+                <p>50</p>
+            </div>
+            <div class="card">
+                <h3>Pending Swaps</h3>
+                <p>
+                    <span class="badge pending">3</span>
+                </p>
+            </div>
+        </div>
+
+        <h3>Manage Sections</h3>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Branch</th>
+                        <th>Section</th>
+                        <th>Year</th>
+                        <th>Type</th>
+                        <th>Class Teacher</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CSE</td>
+                        <td>A</td>
+                        <td>3rd</td>
+                        <td><span class="badge static">Static</span></td>
+                        <td>Dr. A. Ram</td>
+                    </tr>
+                    <tr>
+                        <td>ECE</td>
+                        <td>B</td>
+                        <td>2nd</td>
+                        <td><span class="badge floating">Floating</span></td>
+                        <td>Prof. S. Jane</td>
+                    </tr>
+                    <tr>
+                        <td>AIML</td>
+                        <td>A</td>
+                        <td>1st</td>
+                        <td><span class="badge static">Static</span></td>
+                        <td>Dr. B. Kevin</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Recent Leave Requests</h3>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Reason</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>23CSE001</td>
+                        <td>Fever</td>
+                        <td>2025-08-25</td>
+                        <td><span class="badge approved">Approved</span></td>
+                    </tr>
+                    <tr>
+                        <td>23ECE015</td>
+                        <td>Family function</td>
+                        <td>2025-08-26</td>
+                        <td><span class="badge pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>23IT022</td>
+                        <td>Personal</td>
+                        <td>2025-08-27</td>
+                        <td><span class="badge rejected">Rejected</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Get the logout button element
+        const logoutBtn = document.getElementById('logout-admin-btn');
+
+        // Add a click event listener to the logout button
+        logoutBtn.addEventListener('click', () => {
+            // Redirect the user back to the login page
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

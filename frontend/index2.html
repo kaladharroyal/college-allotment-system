@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom & Exam Allotment System</title>
+    <meta name="description" content="Streamlined Academic Management Platform for classroom scheduling and exam allotment">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.400.0/lucide.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.400.0/lucide.min.js"></script>
+    <style>
+    /* Import Google Font */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    /* CSS Variables for Colors (Light Mode) */
+    :root {
+        --background: 210 40% 96.1%;
+        --foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 47.4% 11.2%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 47.4% 11.2%;
+        --primary: 221.2 83.2% 53.3%;
+        --primary-foreground: 210 40% 98%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 221.2 83.2% 53.3%;
+        --radius: 0.5rem;
+        --success: 142.1 76.2% 36.3%;
+        --warning: 48 96% 48%;
+    }
+
+    /* CSS Variables for Colors (Dark Mode) */
+    .dark {
+        --background: 224 71.4% 4.1%;
+        --foreground: 210 40% 98%;
+        --muted: 215 27.9% 16.9%;
+        --muted-foreground: 217.9 10.6% 64.5%;
+        --card: 224 71.4% 4.1%;
+        --card-foreground: 210 40% 98%;
+        --popover: 224 71.4% 4.1%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 217.2 91.2% 59.8%;
+        --primary-foreground: 224 71.4% 4.1%;
+        --secondary: 215 27.9% 16.9%;
+        --secondary-foreground: 210 40% 98%;
+        --accent: 215 27.9% 16.9%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 215 27.9% 16.9%;
+        --input: 215 27.9% 16.9%;
+        --ring: 217.2 91.2% 59.8%;
+        --success: 142.1 76.2% 36.3%;
+        --warning: 48 96% 48%;
+    }
+
+    /* Base Styles */
+    * {
+        border-color: hsl(var(--border));
+    }
+
+    body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 1.5;
+    }
+
+    /* Layout & Containers */
+    .academic-container {
+        max-width: 1120px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .page-content {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Academic Card Component */
+    .academic-card {
+        background-color: hsl(var(--card));
+        color: hsl(var(--card-foreground));
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        border: 1px solid hsl(var(--border));
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 300ms;
+    }
+
+    .academic-card .card-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid hsl(var(--border));
+    }
+
+    .academic-card .card-content {
+        padding: 1.5rem;
+    }
+
+    .academic-card .card-title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+    }
+    
+    .academic-card .card-description {
+        color: hsl(var(--muted-foreground));
+        margin-top: 0.25rem;
+    }
+
+    /* Typography */
+    .heading-xl {
+        font-size: 2rem;
+        line-height: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+    }
+    @media (min-width: 768px) {
+        .heading-xl {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+        }
+    }
+    @media (min-width: 1024px) {
+        .heading-xl {
+            font-size: 3rem;
+            line-height: 1;
+        }
+    }
+
+    .heading-md {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+    }
+    @media (min-width: 768px) {
+        .heading-md {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+    }
+
+    /* Backgrounds & Shadows */
+    .academic-gradient-subtle {
+        background-image: radial-gradient(at 10% 20%, hsl(var(--primary) / 0.1) 0, transparent 50%),
+                          radial-gradient(at 90% 80%, hsl(var(--primary) / 0.1) 0, transparent 50%);
+    }
+
+    .shadow-academic {
+        box-shadow: 0 10px 30px -5px hsl(var(--primary) / 0.2), 0 4px 6px -2px hsl(var(--primary) / 0.05);
+    }
+    .dark .shadow-academic {
+        box-shadow: 0 10px 30px -5px hsl(var(--primary) / 0.1), 0 4px 6px -2px hsl(var(--primary) / 0.05);
+    }
+    .shadow-soft {
+        box-shadow: 0 4px 8px -2px hsl(var(--muted-foreground) / 0.1), 0 2px 4px -1px hsl(var(--muted-foreground) / 0.06);
+    }
+
+    /* Buttons */
+    .btn-academic, .btn-secondary-academic, .btn-outline, .btn-accent {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 200ms;
+        height: 2.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .btn-academic {
+        background-color: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+    }
+    .btn-academic:hover {
+        background-color: hsl(var(--primary) / 0.9);
+    }
+
+    .btn-secondary-academic {
+        background-color: hsl(var(--secondary));
+        color: hsl(var(--secondary-foreground));
+    }
+    .btn-secondary-academic:hover {
+        background-color: hsl(var(--secondary) / 0.8);
+    }
+
+    .btn-outline {
+        border: 1px solid hsl(var(--input));
+        background-color: hsl(var(--background));
+    }
+    .btn-outline:hover {
+        background-color: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
+    }
+
+    .btn-accent {
+        background-color: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
+    }
+    .btn-accent:hover {
+        background-color: hsl(var(--accent) / 0.8);
+    }
+
+    /* Form Elements */
+    .form-input-academic {
+        display: flex;
+        height: 2.5rem;
+        width: 100%;
+        border-radius: 0.375rem;
+        border: 1px solid hsl(var(--input));
+        background-color: hsl(var(--background));
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        font-size: 0.875rem;
+    }
+    .form-input-academic::placeholder {
+        color: hsl(var(--muted-foreground));
+    }
+    .form-input-academic:focus {
+        outline: 2px solid hsl(var(--ring));
+        outline-offset: 2px;
+    }
+
+    .form-label-academic {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    /* Tabs */
+    .tabs-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-bottom: 2rem;
+        border-bottom: 1px solid hsl(var(--border));
+    }
+    .tab-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        border-top-left-radius: 0.375rem;
+        border-top-right-radius: 0.375rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 200ms ease;
+        color: hsl(var(--muted-foreground));
+    }
+    .tab-trigger:hover {
+        color: hsl(var(--foreground) / 0.9);
+    }
+    .tab-trigger.active {
+        color: hsl(var(--foreground));
+        border-bottom-width: 2px;
+        border-bottom-color: hsl(var(--primary));
+    }
+
+    /* Status Badges */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        border: 1px solid;
+        padding-left: 0.625rem;
+        padding-right: 0.625rem;
+        padding-top: 0.125rem;
+        padding-bottom: 0.125rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transition-property: all;
+        transition-duration: 200ms;
+    }
+
+    .status-available {
+        background-color: hsl(var(--success) / 0.1);
+        color: hsl(var(--success));
+        border-color: hsl(var(--success) / 0.3);
+    }
+    .status-occupied {
+        background-color: hsl(var(--destructive) / 0.1);
+        color: hsl(var(--destructive));
+        border-color: hsl(var(--destructive) / 0.3);
+    }
+    .status-upcoming {
+        background-color: hsl(var(--warning) / 0.1);
+        color: hsl(var(--warning));
+        border-color: hsl(var(--warning) / 0.3);
+    }
+    .status-static {
+        background-color: hsl(var(--secondary) / 0.2);
+        color: hsl(var(--secondary-foreground));
+        border-color: hsl(var(--secondary));
+    }
+
+    /* Dark Mode Toggle */
+    .theme-toggle {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 50;
+        padding: 0.5rem;
+        border-radius: 9999px;
+        background-color: hsl(var(--card));
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: 1px solid hsl(var(--border));
+        color: hsl(var(--primary-foreground) / 0.8);
+    }
+    
+    .theme-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        transition: all 300ms ease;
+    }
+    .sun-icon {
+        display: none;
+    }
+    .dark .sun-icon {
+        display: block;
+    }
+    .dark .moon-icon {
+        display: none;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+    }
+
+    @keyframes bounceIn {
+        0%, 20%, 40%, 60%, 80%, 100% {
+            transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        0% { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+        20% { transform: scale3d(1.1, 1.1, 1.1); }
+        40% { transform: scale3d(0.9, 0.9, 0.9); }
+        60% { opacity: 1; transform: scale3d(1.03, 1.03, 1.03); }
+        80% { transform: scale3d(0.97, 0.97, 0.97); }
+        100% { opacity: 1; transform: scale3d(1, 1, 1); }
+    }
+    .animate-bounce-in {
+        animation: bounceIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-10px); }
+    }
+    .animate-fade-out {
+        animation: fadeOut 0.5s ease-out forwards;
+    }
+
+    /* Toast Notifications */
+    .toast {
+        position: relative;
+        width: 300px;
+        padding: 1rem;
+        border-radius: 0.375rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: 1px solid hsl(var(--border));
+        background-color: hsl(var(--card));
+        color: hsl(var(--card-foreground));
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .toast.success {
+        border-color: hsl(var(--success) / 0.3);
+        color: hsl(var(--success));
+    }
+    .toast.destructive {
+        border-color: hsl(var(--destructive) / 0.3);
+        color: hsl(var(--destructive));
+    }
+    .toast-message {
+        font-size: 0.875rem;
+    }
+
+    /* Utility classes that were in HTML, now defined here for clarity */
+    .flex { display: flex; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .p-4 { padding: 1rem; }
+    .min-h-screen { min-height: 100vh; }
+    .max-w-md { max-width: 28rem; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .text-center { text-align: center; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .inline-flex { display: inline-flex; }
+    .w-16 { width: 4rem; }
+    .h-16 { height: 4rem; }
+    .bg-primary { background-color: hsl(var(--primary)); }
+    .rounded-full { border-radius: 9999px; }
+    .w-8 { width: 2rem; }
+    .h-8 { height: 2rem; }
+    .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+    .text-foreground { color: hsl(var(--foreground)); }
+    .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .space-y-4 > * + * { margin-top: 1rem; }
+    .w-full { width: 100%; }
+    .hidden { display: none; }
+    .border-b { border-bottom-width: 1px; }
+    .border-border { border-color: hsl(var(--border)); }
+    .bg-card { background-color: hsl(var(--card)); }
+    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .gap-3 { gap: 0.75rem; }
+    .w-10 { width: 2.5rem; }
+    .h-10 { height: 2.5rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .w-5 { width: 1.25rem; }
+    .h-5 { height: 1.25rem; }
+    .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .mr-2 { margin-right: 0.5rem; }
+    .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .card-title { font-size: 1.25rem; }
+    .flex-1 { flex: 1 1 0%; }
+    .font-semibold { font-weight: 600; }
+    .grid { display: grid; }
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .gap-4 { gap: 1rem; }
+    .font-medium { font-weight: 500; }
+    .text-base { font-size: 1rem; line-height: 1.5rem; }
+    .space-y-6 > * + * { margin-top: 1.5rem; }
+    .rounded-md { border-radius: 0.375rem; }
+    .bg-muted\/40 { background-color: hsl(var(--muted) / 0.4); }
+    .font-bold { font-weight: 700; }
+    .text-xs { font-size: 0.75rem; line-height: 1rem; }
+    .p-3 { padding: 0.75rem; }
+    .justify-between { justify-content: space-between; }
+    .text-right { text-align: right; }
+    .w-12 { width: 3rem; }
+    .h-12 { height: 3rem; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .mb-4 { margin-bottom: 1rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .gap-6 { gap: 1.5rem; }
+    .gap-2 { gap: 0.5rem; }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .bg-muted\/30 { background-color: hsl(var(--muted) / 0.3); }
+    .text-success { color: hsl(var(--success)); }
+    .text-warning { color: hsl(var(--warning)); }
+    .flex-col { flex-direction: column; }
+    .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .gap-8 { gap: 2rem; }
+    .h-2 { height: 0.5rem; }
+    .bg-secondary { background-color: hsl(var(--secondary)); }
+    .rounded-full { border-radius: 9999px; }
+    .overflow-hidden { overflow: hidden; }
+    .h-full { height: 100%; }
+    .bg-primary { background-color: hsl(var(--primary)); }
+    .h-8 { height: 2rem; }
+    .text-success-foreground { color: hsl(var(--success-foreground)); }
+    .text-destructive-foreground { color: hsl(var(--destructive-foreground)); }
+    .top-4 { top: 1rem; }
+    .right-4 { right: 1rem; }
+    .z-50 { z-index: 50; }
+    .space-y-2 > * + * { margin-top: 0.5rem; }
+    .w-[300px] { width: 300px; }
+    .ml-auto { margin-left: auto; }
+</style>
+</head>
+<body>
+    <!-- Dark Mode Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <i data-lucide="sun" class="theme-icon sun-icon"></i>
+        <i data-lucide="moon" class="theme-icon moon-icon"></i>
+    </button>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page-content min-h-screen academic-gradient-subtle flex items-center justify-center p-4">
+        <div class="academic-container">
+            <div class="max-w-md mx-auto animate-fade-in">
+                <!-- Header -->
+                <div class="text-center mb-8 animate-slide-up">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4 shadow-academic">
+                        <i data-lucide="book-open" class="w-8 h-8 text-primary-foreground"></i>
+                    </div>
+                    <h1 class="heading-xl text-foreground mb-2">
+                        Classroom & Exam Allotment System
+                    </h1>
+                    <p class="text-muted-foreground text-lg">
+                        Streamlined Academic Management Platform
+                    </p>
+                </div>
+
+                <!-- Login Card -->
+                <div class="academic-card animate-bounce-in">
+                    <div class="card-header text-center pb-2">
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-3">
+                            <i data-lucide="graduation-cap" class="w-6 h-6 text-primary current-role-icon"></i>
+                        </div>
+                        <h2 class="heading-md current-role-title">Student Portal</h2>
+                        <p class="text-base text-muted-foreground current-role-description">
+                            Access your timetable, exam schedule, and apply for leave
+                        </p>
+                    </div>
+
+                    <div class="card-content">
+                        <!-- Role Tabs -->
+                        <div class="tabs-list grid grid-cols-3 mb-6">
+                            <button class="tab-trigger active" data-role="student">
+                                <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                                Student
+                            </button>
+                            <button class="tab-trigger" data-role="faculty">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                Faculty
+                            </button>
+                            <button class="tab-trigger" data-role="admin">
+                                <i data-lucide="shield" class="w-4 h-4"></i>
+                                Admin
+                            </button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form id="login-form" class="space-y-4">
+                            <div class="space-y-2">
+                                <label for="identifier" class="form-label-academic current-identifier-label">
+                                    Roll Number
+                                </label>
+                                <input
+                                    id="identifier"
+                                    name="identifier"
+                                    type="text"
+                                    placeholder="Roll Number (e.g., 23CSE001)"
+                                    class="form-input-academic"
+                                    required
+                                >
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="password" class="form-label-academic">
+                                    Password
+                                </label>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    class="form-input-academic"
+                                    required
+                                >
+                            </div>
+
+                            <button type="submit" class="btn-academic w-full">
+                                Sign In
+                            </button>
+
+                            <div id="sample-credentials" class="text-sm text-muted-foreground text-center mt-3 p-3 bg-muted/50 rounded-lg">
+                                Sample: 23CSE001 / password123
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-center mt-8 text-sm text-muted-foreground">
+                    <p>Secure Academic Management System</p>
+                    <p class="mt-1">© 2024 College Management System</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="student-dashboard" class="page-content min-h-screen bg-background hidden">
+        <!-- Header -->
+        <header class="border-b border-border bg-card shadow-soft">
+            <div class="academic-container py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <i data-lucide="book-open" class="w-5 h-5 text-primary-foreground"></i>
+                        </div>
+                        <div>
+                            <h1 class="heading-md text-foreground">Student Portal</h1>
+                            <p class="text-sm text-muted-foreground">Welcome back, John Doe</p>
+                        </div>
+                    </div>
+                    <button class="btn-outline logout-btn">
+                        <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="academic-container py-8">
+            <!-- Student Info Card -->
+            <div class="academic-card mb-8 animate-fade-in">
+                <div class="card-header">
+                    <h2 class="card-title flex items-center gap-2">
+                        <i data-lucide="book-open" class="w-5 h-5 text-primary"></i>
+                        Student Information
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Roll Number</p>
+                            <p class="text-lg font-semibold text-foreground">23CSE001</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Branch</p>
+                            <p class="text-base text-foreground">Computer Science Engineering</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Year & Section</p>
+                            <div class="flex items-center gap-2">
+                                <span class="text-base text-foreground">2nd Year - A</span>
+                                <span class="status-static">Static</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tabs-list grid grid-cols-3 mb-8">
+                    <button class="tab-trigger active" data-tab="timetable">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        Timetable
+                    </button>
+                    <button class="tab-trigger" data-tab="exams">
+                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                        Examinations
+                    </button>
+                    <button class="tab-trigger" data-tab="leave">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        Leave Application
+                    </button>
+                </div>
+
+                <!-- Timetable Tab -->
+                <div id="timetable-tab" class="tab-content animate-fade-in">
+                    <div class="space-y-6" id="timetable-container">
+                        <!-- Timetable will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Exams Tab -->
+                <div id="exams-tab" class="tab-content hidden">
+                    <div class="academic-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Examination Schedule</h2>
+                            <p class="card-description">Your upcoming examinations and seating arrangements</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-4" id="exam-schedule">
+                                <!-- Exam schedule will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leave Tab -->
+                <div id="leave-tab" class="tab-content hidden">
+                    <div class="academic-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Leave Application</h2>
+                            <p class="card-description">Submit leave requests to your class teacher</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="text-center py-12">
+                                <i data-lucide="clock" class="w-12 h-12 text-muted-foreground mx-auto mb-4"></i>
+                                <h3 class="text-lg font-semibold mb-2">Leave Application System</h3>
+                                <p class="text-muted-foreground mb-6">
+                                    This feature will allow you to submit leave applications directly to your class teacher.
+                                </p>
+                                <button class="btn-secondary-academic">
+                                    Coming Soon
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Faculty Dashboard -->
+    <div id="faculty-dashboard" class="page-content min-h-screen bg-background hidden">
+        <!-- Header -->
+        <header class="border-b border-border bg-card shadow-soft">
+            <div class="academic-container py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <i data-lucide="users" class="w-5 h-5 text-primary-foreground"></i>
+                        </div>
+                        <div>
+                            <h1 class="heading-md text-foreground">Faculty Portal</h1>
+                            <p class="text-sm text-muted-foreground">Welcome back, Dr. John Smith</p>
+                        </div>
+                    </div>
+                    <button class="btn-outline logout-btn">
+                        <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="academic-container py-8">
+            <!-- Faculty Info Card -->
+            <div class="academic-card mb-8 animate-fade-in">
+                <div class="card-header">
+                    <h2 class="card-title flex items-center gap-2">
+                        <i data-lucide="users" class="w-5 h-5 text-primary"></i>
+                        Faculty Information
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Email</p>
+                            <p class="text-base text-foreground">john.smith@college.edu</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Department</p>
+                            <p class="text-base text-foreground">Computer Science Engineering</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Designation</p>
+                            <p class="text-base text-foreground">Associate Professor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tabs-list grid grid-cols-3 mb-8">
+                    <button class="tab-trigger active" data-tab="teaching">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        Teaching Schedule
+                    </button>
+                    <button class="tab-trigger" data-tab="invigilation">
+                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                        Invigilation Duties
+                    </button>
+                    <button class="tab-trigger" data-tab="swaps">
+                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        Duty Swaps
+                    </button>
+                </div>
+
+                <!-- Teaching Schedule Tab -->
+                <div id="teaching-tab" class="tab-content animate-fade-in">
+                    <div class="space-y-6" id="teaching-schedule">
+                        <!-- Teaching schedule will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Invigilation Tab -->
+                <div id="invigilation-tab" class="tab-content hidden">
+                    <div class="academic-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Examination Invigilation Duties</h2>
+                            <p class="card-description">Your assigned invigilation duties for upcoming examinations</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-4" id="invigilation-duties">
+                                <!-- Invigilation duties will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duty Swaps Tab -->
+                <div id="swaps-tab" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <!-- Pending Requests -->
+                        <div class="academic-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Pending Swap Requests</h2>
+                                <p class="card-description">Review and respond to duty swap requests from other faculty members</p>
+                            </div>
+                            <div class="card-content" id="swap-requests">
+                                <!-- Swap requests will be populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Request Swap -->
+                        <div class="academic-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Request Duty Swap</h2>
+                                <p class="card-description">Request to swap your invigilation duty with another faculty member</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="text-center py-8">
+                                    <i data-lucide="refresh-cw" class="w-12 h-12 text-muted-foreground mx-auto mb-4"></i>
+                                    <h3 class="text-lg font-semibold mb-2">Duty Swap Request</h3>
+                                    <p class="text-muted-foreground mb-6">
+                                        This feature will allow you to request duty swaps with other faculty members.
+                                    </p>
+                                    <button class="btn-secondary-academic">
+                                        Coming Soon
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="page-content min-h-screen bg-background hidden">
+        <!-- Header -->
+        <header class="border-b border-border bg-card shadow-soft">
+            <div class="academic-container py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <i data-lucide="shield" class="w-5 h-5 text-primary-foreground"></i>
+                        </div>
+                        <div>
+                            <h1 class="heading-md text-foreground">Admin Portal</h1>
+                            <p class="text-sm text-muted-foreground">System Administration Dashboard</p>
+                        </div>
+                    </div>
+                    <button class="btn-outline logout-btn">
+                        <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="academic-container py-8">
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="academic-card animate-fade-in">
+                    <div class="card-content text-center py-6">
+                        <i data-lucide="users" class="w-8 h-8 text-primary mx-auto mb-3"></i>
+                        <h3 class="text-2xl font-bold text-foreground">1,247</h3>
+                        <p class="text-sm text-muted-foreground">Total Students</p>
+                    </div>
+                </div>
+                <div class="academic-card animate-fade-in">
+                    <div class="card-content text-center py-6">
+                        <i data-lucide="graduation-cap" class="w-8 h-8 text-accent mx-auto mb-3"></i>
+                        <h3 class="text-2xl font-bold text-foreground">89</h3>
+                        <p class="text-sm text-muted-foreground">Faculty Members</p>
+                    </div>
+                </div>
+                <div class="academic-card animate-fade-in">
+                    <div class="card-content text-center py-6">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-warning mx-auto mb-3"></i>
+                        <h3 class="text-2xl font-bold text-foreground">145</h3>
+                        <p class="text-sm text-muted-foreground">Total Rooms</p>
+                    </div>
+                </div>
+                <div class="academic-card animate-fade-in">
+                    <div class="card-content text-center py-6">
+                        <i data-lucide="calendar" class="w-8 h-8 text-success mx-auto mb-3"></i>
+                        <h3 class="text-2xl font-bold text-foreground">12</h3>
+                        <p class="text-sm text-muted-foreground">Active Exams</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tabs-list grid grid-cols-3 mb-8">
+                    <button class="tab-trigger active" data-tab="overview">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Overview
+                    </button>
+                    <button class="tab-trigger" data-tab="rooms">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        Room Management
+                    </button>
+                    <button class="tab-trigger" data-tab="analytics">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                        Analytics
+                    </button>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overview-tab" class="tab-content animate-fade-in">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Recent Activity -->
+                        <div class="academic-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Recent System Activity</h2>
+                            </div>
+                            <div class="card-content">
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                                        <i data-lucide="user-plus" class="w-4 h-4 text-success"></i>
+                                        <div>
+                                            <p class="text-sm font-medium">New student registered</p>
+                                            <p class="text-xs text-muted-foreground">23CSE045 - 2 minutes ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                                        <i data-lucide="calendar-check" class="w-4 h-4 text-primary"></i>
+                                        <div>
+                                            <p class="text-sm font-medium">Exam schedule updated</p>
+                                            <p class="text-xs text-muted-foreground">Data Structures - 5 minutes ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                                        <i data-lucide="refresh-cw" class="w-4 h-4 text-warning"></i>
+                                        <div>
+                                            <p class="text-sm font-medium">Faculty swap request</p>
+                                            <p class="text-xs text-muted-foreground">Dr. Smith → Dr. Wilson - 10 minutes ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="academic-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Quick Actions</h2>
+                            </div>
+                            <div class="card-content">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button class="btn-academic text-center">
+                                        <i data-lucide="user-plus" class="w-5 h-5 mx-auto mb-2"></i>
+                                        Add Student
+                                    </button>
+                                    <button class="btn-secondary-academic text-center">
+                                        <i data-lucide="graduation-cap" class="w-5 h-5 mx-auto mb-2"></i>
+                                        Add Faculty
+                                    </button>
+                                    <button class="btn-accent text-center">
+                                        <i data-lucide="calendar-plus" class="w-5 h-5 mx-auto mb-2"></i>
+                                        Schedule Exam
+                                    </button>
+                                    <button class="btn-outline text-center">
+                                        <i data-lucide="file-text" class="w-5 h-5 mx-auto mb-2"></i>
+                                        Generate Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Management Tab -->
+                <div id="rooms-tab" class="tab-content hidden">
+                    <div class="academic-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Room Utilization</h2>
+                            <p class="card-description">Current room usage and availability</p>
+                        </div>
+                        <div class="card-content">
+                            <div id="room-utilization">
+                                <!-- Room data will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div id="analytics-tab" class="tab-content hidden">
+                    <div class="space-y-8">
+                        <div class="academic-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Faculty Workload Analysis</h2>
+                                <p class="card-description">Teaching and invigilation load distribution</p>
+                            </div>
+                            <div class="card-content">
+                                <div id="faculty-workload">
+                                    <!-- Faculty workload data will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
